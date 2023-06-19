@@ -12,5 +12,11 @@ def test_ingredient():
     assert ingrediente.restrictions == {Restriction.LACTOSE, Restriction.ANIMAL_DERIVED}
     assert ingredient.restrictions == {Restriction.ANIMAL_MEAT, Restriction.ANIMAL_DERIVED}
 
-    assert ingrediente.__repr__ == "Ingredient('queijo parmesão')"
-    assert ingredient.__repr__ == "Ingredient('bacon')"
+    assert repr(ingrediente) == "Ingredient('queijo parmesão')"
+    assert repr(ingredient) == "Ingredient('bacon')"
+
+    assert ingredient.__eq__(ingredient) == True
+    assert ingrediente.__eq__(ingredient) == False
+
+    assert ingrediente.__hash__() == ingrediente.__hash__()
+    assert ingrediente.__hash__() != ingredient.__hash__()
