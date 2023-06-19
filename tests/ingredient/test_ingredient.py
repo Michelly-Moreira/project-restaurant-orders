@@ -17,8 +17,8 @@ def test_ingredient():
         Restriction.ANIMAL_DERIVED
         }
 
-    assert ingrediente.__repr__(ingrediente) == "Ingredient('queijo parmesão')"
-    assert ingrediente.__repr__(ingredient) == "Ingredient('bacon')"
+    assert ingrediente.__repr__() == "Ingredient('queijo parmesão')"
+    assert ingredient.__repr__() == "Ingredient('bacon')"
 
     assert ingredient.__eq__(ingredient) is True
     assert ingrediente.__eq__(ingredient) is False
