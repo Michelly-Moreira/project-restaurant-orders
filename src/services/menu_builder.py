@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
+from src.models.ingredient import Restriction
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -24,6 +25,23 @@ class MenuBuilder:
 
         self.inventory.consume_recipe(curr_dish.recipe)
 
-    # Req 4
     def get_main_menu(self, restriction=None) -> List[Dict]:
-        pass
+        self.restriction = restriction
+        dishes = []
+        for dish in self.menu_data.dishes:
+            if self.restriction not in dish.get_restrictions():
+                dishes_not_restrictions = {
+                    "dish_name": dish.name,
+                    "ingredients": list(dish.get_ingredients()),
+                    "price": dish.price,
+                    "restrictions": list(dish.get_restrictions()),
+                }
+                dishes.append(dishes_not_restrictions)
+        # print(dishes)
+        return dishes
+
+    # retorna os pratos que não tem tal restrição
+    # return List[Dict]
+
+
+MenuBuilder().get_main_menu(Restriction.ANIMAL_DERIVED)
