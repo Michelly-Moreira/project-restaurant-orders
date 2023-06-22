@@ -8,11 +8,11 @@ class MenuData:
         self.source_path = source_path
         self.dishes = set()
 
-#lendo o arquivo csv:
+# lendo o arquivo csv:
         with open(self.source_path, encoding="utf-8") as file:
             source = csv.reader(file, delimiter=",", quotechar='"')
             header, *data = source
-            #print(header,data)
+            # print(header,data)
 
 # Quando um * está presente no desempacotamento,
 # os valores são desempacotados em formato de lista.
@@ -29,8 +29,8 @@ class MenuData:
             if i[0] != name:
                 name = i[0]
                 price = float(i[1])
-                #print(name, price)
-                #print(ingredient, amount)
+                # print(name, price)
+                # print(ingredient, amount)
                 new_dish = Dish(name, price)
                 new_dish.add_ingredient_dependency(
                     Ingredient(ingredient), amount
@@ -44,4 +44,5 @@ class MenuData:
                     Ingredient(ingredient), amount
                 )
 
-MenuData("/home/michelly/Trybe/trybe-project/cs/sd-026-b-restaurant-orders/data/menu_base_data.csv")
+
+MenuData("tests/mocks/menu_base_data.csv")
