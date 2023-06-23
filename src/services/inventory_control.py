@@ -25,20 +25,22 @@ class InventoryMapping:
     def __init__(self, inventory_file_path=BASE_INVENTORY) -> None:
         self.inventory = read_csv_inventory(inventory_file_path)
 
-    # Req 5.1
     def check_recipe_availability(self, recipe: Recipe) -> bool:
-        i = 0
-        for row in self.inventory:
-            if row == list(recipe.keys())[i]:
-                if self.inventory[row] >= int(list(recipe.values())[i]):
-                    if i == len(recipe)-1:
-                        return True
-        return False
+        for ingredient in self.inventory:
+            if ingredient in recipe:
+                if self.inventory[ingredient] < recipe[ingredient]:
+                    return False
+        return True
 
     def consume_recipe(self, recipe: Recipe) -> None:
-        self.recipe = recipe
+        inventory_base = self.check_recipe_availability(recipe)
+        if inventory_base is False:
+            raise ValueError("Ops! Sem estoque suficiente")
+        for ingredient in recipe:
+            self.inventory[ingredient] -= recipe[ingredient]
+        return None
 
 
 stock = InventoryMapping(BASE_INVENTORY)
-stock.check_recipe_availability({Ingredient('queijo mussarela'): 300})
-# stock.consume_recipe("cravo", 200)
+stock.check_recipe_availability({Ingredient('carne'): 20})
+stock.consume_recipe({Ingredient('carne'): 20})
