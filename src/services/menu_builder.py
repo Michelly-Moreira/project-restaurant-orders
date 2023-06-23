@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from services.inventory_control import InventoryMapping
 from services.menu_data import MenuData
-from src.models.ingredient import Restriction
+from models.ingredient import Restriction
 
 DATA_PATH = "data/menu_base_data.csv"
 INVENTORY_PATH = "data/inventory_base_data.csv"
@@ -29,6 +29,7 @@ class MenuBuilder:
         self.restriction = restriction
         dishes = []
         for dish in self.menu_data.dishes:
+            print(dish.get_ingredients())
             if self.restriction not in dish.get_restrictions():
                 dishes_not_restrictions = {
                     "dish_name": dish.name,
