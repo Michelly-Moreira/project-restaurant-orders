@@ -26,10 +26,12 @@ class InventoryMapping:
         self.inventory = read_csv_inventory(inventory_file_path)
 
     def check_recipe_availability(self, recipe: Recipe) -> bool:
-        for ingredient in self.inventory:
-            if ingredient in recipe:
-                if self.inventory[ingredient] < recipe[ingredient]:
-                    return False
+        for ingredient in recipe:
+            if (ingredient not in self.inventory
+                    or self.inventory[ingredient] < recipe[ingredient]):
+                # print('false')
+                return False
+        # print('true')
         return True
 
     def consume_recipe(self, recipe: Recipe) -> None:
@@ -42,5 +44,5 @@ class InventoryMapping:
 
 
 stock = InventoryMapping(BASE_INVENTORY)
-stock.check_recipe_availability({Ingredient('carne'): 20})
+stock.check_recipe_availability({Ingredient('banana'): 20})
 stock.consume_recipe({Ingredient('carne'): 20})
